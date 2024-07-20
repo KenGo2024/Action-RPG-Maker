@@ -4,10 +4,17 @@
 #include "Player/AuraPlayerController.h"
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
+#include "Interaction/EnemyInterface.h"
 
 AAuraPlayerController::AAuraPlayerController()
 {
 	bReplicates = true;
+}
+
+void AAuraPlayerController::PlayerTick(float DeltaTime)
+{
+	Super::PlayerTick(DeltaTime);
+	CursorTrace();
 }
 
 void AAuraPlayerController::BeginPlay()
@@ -49,6 +56,51 @@ void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
 		ControlledPawn->AddMovementInput(ForwardDirection, InputAxisVector.Y);
 		ControlledPawn->AddMovementInput(RightDirection, InputAxisVector.X);
 		
+	}
+}
+
+void AAuraPlayerController::CursorTrace()
+{
+	FHitResult CursorHit;
+	GetHitResultUnderCursor(ECC_Visibility, false, CursorHit);
+	if(!CursorHit.bBlockingHit) return;
+
+	LastActor = ThisActor;
+	ThisActor = CursorHit.GetActor();
+	
+	
+	if (LastActor == nullptr)
+	{
+		if(ThisActor)
+		{
+			//TH2: LastActor = null, thisActor is valid - HL this Actor.
+			ThisActor->HightlightActor();
+		}
+		else
+		{
+			//TH1: LastActor = null, ThisActor = null - do nothing.
+		}
+	}
+	else
+	{
+		if(ThisActor==nullptr)
+		{
+			//TH3: LastActor is valid, ThisActor = null - UHL last Actor.
+			LastActor->UnHightlightActor();
+		}
+		else
+		{
+			if(LastActor != ThisActor)
+			{
+				//TH4: LastActor and ThisActor is valid, LastActor != ThisActor - UHL LastActor and HL ThisActor.
+				LastActor->UnHightlightActor();
+				ThisActor->HightlightActor();
+			}
+			else
+			{
+				//TH5: LastActor and ThisActor is valid, are the same actor - do nothing.
+			}
+		}
 	}
 }
 	
