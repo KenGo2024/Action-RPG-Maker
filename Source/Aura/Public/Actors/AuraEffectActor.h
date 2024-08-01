@@ -3,7 +3,7 @@
 #pragma once
 #include "Containers/Map.h"
 #include "CoreMinimal.h"
-#include "ActiveGameplayEffectHandle.h"
+#include "GameplayEffectTypes.h"
 #include "GameFramework/Actor.h"
 #include "AuraEffectActor.generated.h"
 
@@ -72,7 +72,9 @@ protected:
 	EEffectRemovalPolicy InfiniteEffectRemovalPolicy = EEffectRemovalPolicy::RemoveOnEndOverlap;
 
 	TMap<FActiveGameplayEffectHandle, UAbilitySystemComponent*> ActiveEffectHandles;
-	
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Gameplay Effect")
+	float ActorLevel = 1.f;
 private:
 	
 };
