@@ -4,6 +4,7 @@
 #include "Actors/AuraEffectActor.h"
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystemComponent.h"
+#include "GameplayEffectTypes.h"
 
 
 AAuraEffectActor::AAuraEffectActor()

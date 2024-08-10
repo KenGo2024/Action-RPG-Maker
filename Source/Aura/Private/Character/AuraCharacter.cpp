@@ -2,7 +2,7 @@
 
 
 #include "Character/AuraCharacter.h"
-
+#include "GameplayEffectTypes.h"
 #include "AbilitySystemComponent.h"
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -38,6 +38,7 @@ void AAuraCharacter::InitAbilityActorInfo()
 			AuraHUD->InitOverlay(AuraPlayerController, AuraPlayerState, AbilitySystemComponent, AttributeSet);
 		}
 	}
+	InitializeAttributes();
 }
 
 void AAuraCharacter::PossessedBy(AController* NewController)
@@ -51,4 +52,11 @@ void AAuraCharacter::OnRep_PlayerState()
 {
 	Super::OnRep_PlayerState();
 	
+}
+
+int32 AAuraCharacter::GetPlayerLevel()
+{
+	const AAuraPlayerState* AuraPlayerState = GetPlayerState<AAuraPlayerState>();
+	check (AuraPlayerState);
+	return AuraPlayerState->GetPlayerLevel();
 }

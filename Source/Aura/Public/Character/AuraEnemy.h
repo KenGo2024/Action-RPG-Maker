@@ -19,8 +19,13 @@ public:
 	
 	virtual void HightlightActor() override;
 	virtual void UnHightlightActor() override;
+
+	virtual int32 GetPlayerLevel() override;
 protected:
 	virtual void BeginPlay() override;
 
 	virtual void InitAbilityActorInfo() override;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Chracter Class Default")
+	int32 Level = 1;
 };

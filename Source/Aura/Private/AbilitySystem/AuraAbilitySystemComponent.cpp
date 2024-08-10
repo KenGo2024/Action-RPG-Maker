@@ -2,6 +2,7 @@
 
 
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
+#include "GameplayEffectTypes.h"
 
 void UAuraAbilitySystemComponent::AbilityActorInfoSet()
 {
@@ -9,13 +10,11 @@ void UAuraAbilitySystemComponent::AbilityActorInfoSet()
 }
 
 void UAuraAbilitySystemComponent::EffectApplied(UAbilitySystemComponent* AbilitySystemComponent,
-                                                const FGameplayEffectSpec& EffectSpec, FActiveGameplayEffectHandle EffectHandle)
+                                                const FGameplayEffectSpec& EffectSpec, FActiveGameplayEffectHandle EffectHandle) const
 {
 	FGameplayTagContainer TagContainer;
 	EffectSpec.GetAllAssetTags(TagContainer);
-	for (const FGameplayTag& Tag : TagContainer)
-	{
-		const FString Msg = FString::Printf(TEXT("GE: %s"), *Tag.ToString());
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Black, Msg);
-	}
+
+	EffectAssetTag.Broadcast(TagContainer);
+	
 }
