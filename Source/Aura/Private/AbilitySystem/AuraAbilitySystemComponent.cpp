@@ -2,11 +2,14 @@
 
 
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
+
+#include "AuraGameplayTag.h"
 #include "GameplayEffectTypes.h"
 
 void UAuraAbilitySystemComponent::AbilityActorInfoSet()
 {
 	OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &UAuraAbilitySystemComponent::EffectApplied);
+	
 }
 
 void UAuraAbilitySystemComponent::EffectApplied(UAbilitySystemComponent* AbilitySystemComponent,
