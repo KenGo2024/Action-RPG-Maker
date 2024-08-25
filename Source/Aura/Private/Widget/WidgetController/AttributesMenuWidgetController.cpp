@@ -3,7 +3,7 @@
 
 #include "Widget/WidgetController/AttributesMenuWidgetController.h"
 
-#include "AuraGameplayTag.h"
+
 #include "AbilitySystem/AuraAttributeSet.h"
 #include "AbilitySystem/Data/AttributesInfo.h"
 
@@ -12,18 +12,32 @@ void UAttributesMenuWidgetController::BroadcastInitialValue()
 	UAuraAttributeSet* AS = CastChecked<UAuraAttributeSet>(AttributeSet);
 	check (AttributeInfo);
 
-	FAuraAttributesInfo Info = AttributeInfo->FindAttributeTag(FAuraGameplayTags::Get().Attributes_Primary_Strength);
-	Info.AttributeValue = AS->GetStrength();
-	AttributeInfoDelegate.Broadcast(Info);
+	for (auto Pair : AS->TagToAttributes)
+	{
+		BroadcastAttributeMenu (Pair.Key, Pair.Value());
+	}
 }
 
 void UAttributesMenuWidgetController::BindCallbacksToDependencies()
 {
-	/*UAuraAttributeSet* AS = CastChecked<UAuraAttributeSet>(AttributeSet);
+	UAuraAttributeSet* AS = CastChecked<UAuraAttributeSet>(AttributeSet);
 	check (AttributeInfo);
 
-	FAuraAttributesInfo Info = AttributeInfo->FindAttributeTag(FAuraGameplayTags::Get().Attributes_Primary_Strength);
-	Info.AttributeValue = AS->GetStrength();
+	for (auto Pair : AS->TagToAttributes)
+	{
+		AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(Pair.Value()).AddLambda(
+		[this, Pair](const FOnAttributeChangeData& Data)
+			{
+				BroadcastAttributeMenu (Pair.Key, Pair.Value());
+			}
+		);
+	}
+}
+
+void UAttributesMenuWidgetController::BroadcastAttributeMenu(const FGameplayTag& AttributeTag,
+	const FGameplayAttribute& Attribute) const
+{
+	FAuraAttributesInfo Info = AttributeInfo->FindAttributeTag(AttributeTag);
+	Info.AttributeValue = Attribute.GetNumericValue(AttributeSet);
 	AttributeInfoDelegate.Broadcast(Info);
-	*/
 }

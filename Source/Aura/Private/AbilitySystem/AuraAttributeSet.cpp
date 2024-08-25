@@ -3,12 +3,30 @@
 #include "AbilitySystem/AuraAttributeSet.h"
 #include "GameplayEffectTypes.h"
 #include "AbilitySystemBlueprintLibrary.h"
+#include "AuraGameplayTag.h"
 #include "GameplayEffectExtension.h"
 #include "GameFramework/Character.h"
 #include "Net/UnrealNetwork.h"
 
 UAuraAttributeSet::UAuraAttributeSet()
 {
+	const FAuraGameplayTags& GameplayTags = FAuraGameplayTags::Get();
+	/* Primary Attributes */
+	TagToAttributes.Add(GameplayTags.Attributes_Primary_Strength, GetStrengthAttribute);
+	TagToAttributes.Add(GameplayTags.Attributes_Primary_Intelligence, GetIntelligenceAttribute);
+	TagToAttributes.Add(GameplayTags.Attributes_Primary_Resilience, GetResilienceAttribute);
+	TagToAttributes.Add(GameplayTags.Attributes_Primary_Vigor, GetVigorAttribute);
+	/* Secondary Attributes */
+	TagToAttributes.Add(GameplayTags.Attributes_Secondary_Armor, GetArmorAttribute);
+	TagToAttributes.Add(GameplayTags.Attributes_Secondary_ArmorPenetration, GetArmorPenetrationAttribute);
+	TagToAttributes.Add(GameplayTags.Attributes_Secondary_BlockChance, GetBlockChanceAttribute);
+	TagToAttributes.Add(GameplayTags.Attributes_Secondary_CriticalHitChance, GetCriticalHitChanceAttribute);
+	TagToAttributes.Add(GameplayTags.Attributes_Secondary_CriticalHitDamage, GetCriticalHitDamageAttribute);
+	TagToAttributes.Add(GameplayTags.Attributes_Secondary_CriticalHitResistance, GetCriticalHitResistanceAttribute);
+	TagToAttributes.Add(GameplayTags.Attributes_Secondary_HealthRegeneration, GetHealthRegenerationAttribute);
+	TagToAttributes.Add(GameplayTags.Attributes_Secondary_ManaRegeneration, GetManaRegenerationAttribute);
+	TagToAttributes.Add(GameplayTags.Attributes_Secondary_MaxHealth, GetMaxHealthAttribute);
+	TagToAttributes.Add(GameplayTags.Attributes_Secondary_MaxMana, GetMaxManaAttribute);
 	
 }
 
