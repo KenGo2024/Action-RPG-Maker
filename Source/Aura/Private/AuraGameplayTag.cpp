@@ -14,7 +14,7 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 	 */
 	GameplayTags.Attributes_Primary_Strength = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Attributes.Primary.Strength"),
-		FString("Increase phisical damage")
+		FString("Increase physical damage")
 		);
 
 	GameplayTags.Attributes_Primary_Intelligence = UGameplayTagsManager::Get().AddNativeGameplayTag(
@@ -61,8 +61,8 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		FString("Add Damage when a Critical Hit is scored")
 		);
 
-	GameplayTags.Attributes_Secondary_CriticalHitRegistance = UGameplayTagsManager::Get().AddNativeGameplayTag(
-		FName("Attributes.Secondary.CriticalHitRegistance"),
+	GameplayTags.Attributes_Secondary_CriticalHitResistance = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Attributes.Secondary.CriticalHitResistance"),
 		FString("Decreases Critical Damage of Enemy")
 		);
 
