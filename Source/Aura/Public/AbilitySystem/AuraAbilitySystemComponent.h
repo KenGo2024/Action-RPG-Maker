@@ -19,6 +19,14 @@ public:
 	void AbilityActorInfoSet();
 
 	FEffectAssetTag EffectAssetTag;
+
+	void AddCharacterAbilities (const TArray<TSubclassOf<UGameplayAbility>>& StartupAbilities);
+
+	void AbilityInputTagHold(const FGameplayTag& InputTag);
+	void AbilityInputTagRelease(const FGameplayTag& InputTag);
+	
 protected:
-	void EffectApplied(UAbilitySystemComponent* AbilitySystemComponent, const FGameplayEffectSpec& EffectSpec, FActiveGameplayEffectHandle EffectHandle) const;
+
+	UFUNCTION(Client, Reliable)
+	void ClientEffectApplied(UAbilitySystemComponent* AbilitySystemComponent, const FGameplayEffectSpec& EffectSpec, FActiveGameplayEffectHandle EffectHandle) const;
 };
